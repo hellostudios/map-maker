@@ -1,0 +1,48 @@
+React Three Fiber: Map Maker
+
+
+
+Overall architecture of the code:
+
+I would like you to setup the pages under the pages folder
+For any components place place them under the components folder
+
+
+Can you initial setup the following pages:
+
+Pages:
+
+Loading page
+Map
+	- Hex Grid
+	- Square Grid
+
+
+Landing page:
+Allow users to select and load maps that have been saved in Firebase
+Allow users to create a new map (this will create a new map in the Firebase database on creation)
+Map types choices: Square Grid map, Hexagon Grid Map
+
+
+Share Functionality:
+
+Move the map around
+Paint select object on the map
+Select mode
+Remove move
+
+
+Objects will have 2 types, snapping and freeform. Snapping will snap to the gird and green form can be places anywhere on the grid space
+When placing objects on the map the user can rotate the object around the z-axis 90 degrees at a time by hitting the "r" key in a clockwise direction, and "l" key in the counter-clockwise direction. The user can also use the same key when they select an object in select mode.
+When in paint mode the user will have an object to paint different objects onto the grid. Initially I would like 3 different objects to be selectable, A box that is the same size as the grid size (1 unit) that is a snapping type, next will be a box that is 2x1 units in size that is a snapping object type. And the last object that will be a Sphere that is half a unit in size that is go freeform type.
+
+Please provide a save option for when the user is editing a map.
+
+When in select mode if a user's mouse moves over an existing object have that object glow green. When the user's mouse moves off the object without selecting it have the object return to its original state. When a user clicks an object in select mode have the object glow orange. If the user clicks a selected object have it de-select and return to its original state.
+
+
+When in paint mode if the user paints over and existing object do nothing.
+
+In paint mode the user is able to either single click to place an object or click and drag to paint many object over the map. If the objects are of type snapping then they snap to the nearest grid, otherwise if they are free form they are places at the mouse's location. For freeform objects can we place have an offset setting on the object that will prevent the object from being placed on the map to close to another object. This offset should be based on the grid unit size.
+
+Interface:
