@@ -1,19 +1,14 @@
 import {useEffect, useState} from 'react';
 import {Canvas} from '@react-three/fiber'
 import {Environment, GizmoHelper, GizmoViewport, OrbitControls} from '@react-three/drei'
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {loadMapFromFirebase} from "../services/firebaseService.js";
+import Nav from "../components/Nav.jsx";
 
 const Map = () => {
     const {id} = useParams();
-    const navigate = useNavigate();
     const [mapData, setMapData] = useState(null);
     const [loading, setLoading] = useState(true);
-
-    const handleHome = (event) => {
-        event.stopPropagation();
-        navigate('/');
-    }
 
     const fetchMap = async (id) => {
         const mapDoc = await loadMapFromFirebase(id)
@@ -41,6 +36,7 @@ const Map = () => {
 
     return (
         <>
+            <Nav name={mapData.name}/>
             <Canvas shadows camera={{position: [20, 24, 24], fov: 50}}>
                 <OrbitControls
                     makeDefault
@@ -52,9 +48,7 @@ const Map = () => {
                     <GizmoViewport axisColors={['#9d4b4b', '#2f7f4f', '#3b5b9d']} labelColor="white"/>
                 </GizmoHelper>
             </Canvas>
-            <div>
-                <button onClick={handleHome}>Home</button>
-            </div>
+
         </>
     )
 }

@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { getMapsFromFirebase } from '../services/firebaseService';
+import {getMapsFromFirebase} from '../services/firebaseService';
+import {useNavigate} from "react-router-dom";
 
 const MapSelector = () => {
-
     const [maps, setMaps] = useState([]);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     const fetchMaps = async () => {
         setLoading(true);
@@ -16,6 +17,10 @@ const MapSelector = () => {
             console.error(error);
         }
         setLoading(false);
+    };
+
+    const handleMapLoad = async (mapId) => {
+        navigate(`/map/${mapId}`); // Redirect to the new map's page
     };
 
     useEffect(() => {
@@ -32,7 +37,7 @@ const MapSelector = () => {
                     {maps.map((map) => (
                         <li key={map.id}>
                             {map.name} - Grid: {map.gridType}, Size: {map.gridSize}
-                            <button onClick={() => console.log('Load map:', map)}>Load</button>
+                            <button onClick={() => handleMapLoad(map.id)}>Load</button>
                         </li>
                     ))}
                 </ul>

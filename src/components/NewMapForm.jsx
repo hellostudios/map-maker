@@ -17,7 +17,6 @@ const NewMapForm = () => {
             gridSize,
             name
         };
-
         try {
             const mapRef = await saveMapToFirebase(newMap); // Save to Firebase
             const newMapId = mapRef.id; // Get the ID of the new map
