@@ -4,6 +4,7 @@ import {Environment, GizmoHelper, GizmoViewport, OrbitControls} from '@react-thr
 import {useParams} from "react-router-dom";
 import {loadMapFromFirebase} from "../services/firebaseService.js";
 import Nav from "../components/Nav.jsx";
+import Grid from "../components/Grid.jsx";
 
 const Map = () => {
     const {id} = useParams();
@@ -37,7 +38,7 @@ const Map = () => {
     return (
         <>
             <Nav name={mapData.name}/>
-            <Canvas shadows camera={{position: [20, 24, 24], fov: 50}}>
+            <Canvas shadows camera={{position: [24, 24, 0], fov: 50}}>
                 <OrbitControls
                     makeDefault
                     minPolarAngle={0.1 * Math.PI}
@@ -47,6 +48,10 @@ const Map = () => {
                 <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
                     <GizmoViewport axisColors={['#9d4b4b', '#2f7f4f', '#3b5b9d']} labelColor="white"/>
                 </GizmoHelper>
+
+                <Grid type={mapData.gridType} size={10} divisions={mapData.gridSize} color1="gray" color2="gray" />
+
+
             </Canvas>
 
         </>
