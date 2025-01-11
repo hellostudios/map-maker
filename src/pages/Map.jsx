@@ -5,11 +5,20 @@ import {useParams} from "react-router-dom";
 import {loadMapFromFirebase} from "../services/firebaseService.js";
 import Nav from "../components/Nav.jsx";
 import Grid from "../components/Grid.jsx";
+import Toolbar from "../components/Toolbar.jsx";
 
 const Map = () => {
     const {id} = useParams();
     const [mapData, setMapData] = useState(null);
     const [loading, setLoading] = useState(true);
+
+
+    const [selectedTool, setSelectedTool] = useState(null);
+
+    const handleToolSelect = (tool) => {
+        setSelectedTool(tool);
+        console.log(`Selected Tool: ${tool}`);
+    };
 
     const fetchMap = async (id) => {
         const mapDoc = await loadMapFromFirebase(id)
@@ -35,8 +44,7 @@ const Map = () => {
     }
 
 
-    return (
-        <>
+    return (<div style={{position: 'relative', height: '100vh', overflow: 'hidden'}}>
             <Nav name={mapData.name}/>
             <Canvas shadows camera={{position: [24, 24, 0], fov: 50}}>
                 <OrbitControls
@@ -48,13 +56,10 @@ const Map = () => {
                 <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
                     <GizmoViewport axisColors={['#9d4b4b', '#2f7f4f', '#3b5b9d']} labelColor="white"/>
                 </GizmoHelper>
-
-                <Grid type={mapData.gridType} size={10} divisions={mapData.gridSize} color1="gray" color2="gray" />
-
-
+                <Grid type={mapData.gridType} size={10} divisions={mapData.gridSize} color1="gray" color2="gray"/>
             </Canvas>
-
-        </>
+            <Toolbar onToolSelect={handleToolSelect}/>
+        </div>
     )
 }
 
