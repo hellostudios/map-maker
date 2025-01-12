@@ -29,3 +29,9 @@
 .toolbar-button:active {
     background-color: #bbb;
 }
+
+/* Highlight active tool */
+.toolbar-button.active {
+    background-color: green;
+    color: white;
+}

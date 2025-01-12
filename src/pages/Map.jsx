@@ -6,18 +6,21 @@ import {loadMapFromFirebase} from "../services/firebaseService.js";
 import Nav from "../components/Nav.jsx";
 import Grid from "../components/Grid.jsx";
 import Toolbar from "../components/Toolbar.jsx";
+import useMapStore from "../store/mapStore.js";
 
 const Map = () => {
     const {id} = useParams();
     const [mapData, setMapData] = useState(null);
     const [loading, setLoading] = useState(true);
+    const { activeTool } = useMapStore();
 
-
-    const [selectedTool, setSelectedTool] = useState(null);
-
-    const handleToolSelect = (tool) => {
-        setSelectedTool(tool);
-        console.log(`Selected Tool: ${tool}`);
+    // Dynamically set the cursor style
+    const getCursorStyle = () => {
+        if (activeTool === 'move') {
+            return 'grab'; // Cursor for move tool
+        }
+        // Default cursor for other tools
+        return 'default';
     };
 
     const fetchMap = async (id) => {
@@ -44,7 +47,13 @@ const Map = () => {
     }
 
 
-    return (<div style={{position: 'relative', height: '100vh', overflow: 'hidden'}}>
+    return (
+        <div style={{
+            position: 'relative',
+            height: '100vh',
+            overflow: 'hidden',
+            cursor: getCursorStyle()
+        }}>
             <Nav name={mapData.name}/>
             <Canvas shadows camera={{position: [24, 24, 0], fov: 50}}>
                 <OrbitControls
@@ -58,7 +67,7 @@ const Map = () => {
                 </GizmoHelper>
                 <Grid type={mapData.gridType} divisions={mapData.gridSize} gridLineColour="gray"/>
             </Canvas>
-            <Toolbar onToolSelect={handleToolSelect}/>
+            <Toolbar />
         </div>
     )
 }
