@@ -56,15 +56,15 @@ const Map = () => {
         }}>
             <Nav name={mapData.name}/>
             <Canvas shadows camera={{position: [24, 24, 0], fov: 50}}>
-                <OrbitControls
+                { activeTool === 'move' && <OrbitControls
                     makeDefault
                     minPolarAngle={0.1 * Math.PI}
                     maxPolarAngle={0.48 * Math.PI}
-                />
+                /> }
                 <Environment preset="city"/>
-                <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
+                { activeTool === 'move' && <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
                     <GizmoViewport axisColors={['#9d4b4b', '#2f7f4f', '#3b5b9d']} labelColor="white"/>
-                </GizmoHelper>
+                </GizmoHelper> }
                 <Grid type={mapData.gridType} divisions={mapData.gridSize} gridLineColour="gray"/>
             </Canvas>
             <Toolbar />
